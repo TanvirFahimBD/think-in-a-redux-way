@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { productAdd } from '../redux/productCounter/productActions';
 
 const productsInfo = [
@@ -25,6 +25,7 @@ const productsInfo = [
 ]
 
 const Products = () => {
+    const state = useSelector((state) => state)
     const dispatch = useDispatch()
     const productHandler = (value) => {
         dispatch(productAdd(value))
@@ -39,7 +40,8 @@ const Products = () => {
                             <h4>TK {product.price}</h4>
                         </div>
                         <div>
-                            <Button onClick={() => productHandler(product)}> Add +</Button>
+                            <Button onClick={() => productHandler(product)}
+                                disabled={state?.items.find(s => s.id === product.id && s.quantity === product.stock)}> Add +</Button>
                         </div>
                     </div>
                 </>)
